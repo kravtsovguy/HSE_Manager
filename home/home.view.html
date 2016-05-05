@@ -1,0 +1,21 @@
+<h2>Привет, {{vm.user.firstName}}!</h2>
+<p><a href="#/addwork" class="btn btn-primary">Добавить задание</a></p>
+<div class="panel-group">
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse">Задания:</a>
+      </h4>
+    </div>
+<div id="collapse1" class="panel-collapse">
+      <ul class="list-group">
+          <li class="list-group-item" ng-repeat="work in vm.works">
+              <p ng-click="vm.towork($index)">{{work.title}}</p>
+              <a href="#" ng-click="vm.deletework($index)">Удалить</a>
+          </li>
+      </ul>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><a href="#/login" class="btn btn-danger btn-sm">Logout</a></p>

@@ -1,0 +1,55 @@
+<h2>{{vm.work.title}}!</h2>
+<p>{{vm.work.text}}</p>
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" >Моя работа</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse">
+      <div class="panel-body">
+          <form ng-if="true" name="form" ng-submit="vm.sendjob()" role="form">
+              <label for="comment">Комментарий:</label>
+              <textarea class="form-control" rows="2" id="comment" ng-model="vm.myjob.comment"></textarea>
+              <br>
+              <label for="file" class="control-label">Проект:</label>
+              <input type="file" class="filestyle" data-buttonName="btn-primary" fileread="vm.file" />
+              <br>
+              <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Отправить</button>
+          </form>
+          <div ng-if="false">
+              <label >Комментарий:</label>
+              <p>Ladies others the six desire age. Bred am soon park past read by lain. As excuse eldest no moment. An delight beloved up garrets am cottage private. The far attachment discovered celebrated decisively surrounded for and. Sir new the particular frequently indulgence excellence how. Wishing an if he sixteen visited tedious subject it. Mind mrs yet did quit high even you went. Sex against the two however not nothing prudent colonel greater. Up husband removed parties staying he subject mr. </p>
+              <br>
+              <label>Проект:</label>
+              <div>
+              <button class="btn btn-primary">Скачать</button>
+            </div>
+              <br>
+              <button class="btn btn-danger btn-sm">Удалить</button>
+          </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel-group">
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse">Работы</a>
+      </h4>
+    </div>
+<div id="collapse1" class="panel-collapse">
+      <ul class="list-group">
+        <li class="list-group-item">One</li>
+        <li class="list-group-item">Two</li>
+        <li class="list-group-item">Three</li>
+      </ul>
+      <div class="panel-footer">Footer</div>
+</div>
+</div>
+</div>
+<a href="#/" class="btn btn-link">Назад</a>
