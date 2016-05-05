@@ -14,12 +14,8 @@
         vm.works = [];
         vm.towork = towork;
         
-
-        
         initController();
 
-
-        
         function initController() {
             //loadCurrentUser();
             //loadAllUsers();

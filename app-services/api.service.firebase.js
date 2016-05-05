@@ -24,28 +24,36 @@
         service.GetAllWorks = GetAllWorks;
         service.GetWork = GetWork;
         service.AddJob = AddJob;
+        service.GetJobs = GetJobs;
         service.fire = fire;
+        service.authdata = fire.getAuth();
 
         return service;
         
-        function GetUserId(){
-            $window.alert("auth: "+JSON.stringify(fire.getAuth()));
-            return fire.getAuth().userid;
+        function GetJobs(workid){
+            var deferred = $q.defer();
+
+            fire.child("jobs").orderByChild("work").equalTo(workid).on("value", function(snapshot) {
+                deferred.resolve(snapshot.val());
+            }, function (errorObject) {
+                deferred.reject();
+            });
+            
+            return deferred.promise;
         }
         
         function AddJob(job,file){
             var deferred = $q.defer();
             
-            
-            
-            var jpush = fire.child("jobs").push()
-            jpush.set(job, onComplete);
-            
-            var onComplete = function(error) {
-                file.child("files/"+jpush.key()).set({file:file}, function (error2){
+            //$window.alert(JSON.stringify(job));
+            if(file){
+            var jpush = fire.child("jobs").push();
+            jpush.set(job, function(error) {
+                fire.child("files/"+jpush.key()).set({file:file}, function (error2){
                     deferred.resolve(error2);
                 });
-            };
+            });
+            }
             
             return deferred.promise;
         }
@@ -143,7 +151,7 @@
                 deferred.resolve({success: false, message: error});
                 //console.log("Login Failed!", error);
               } else {
-                $window.alert("ok! "+JSON.stringify(authData));
+                //$window.alert("ok! "+JSON.stringify(authData));
                 deferred.resolve({success: true, authdata: authData});
                 //console.log("Authenticated successfully with payload:", authData);
                 //$window.alert("ok! "+authData.uid);

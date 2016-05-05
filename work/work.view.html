@@ -44,9 +44,10 @@
     </div>
 <div id="collapse1" class="panel-collapse">
       <ul class="list-group">
-        <li class="list-group-item">One</li>
-        <li class="list-group-item">Two</li>
-        <li class="list-group-item">Three</li>
+          
+        <li class="list-group-item" ng-repeat="job in vm.jobs">
+            <p ng-click="">{{job.user}}</p>
+        </li>
       </ul>
       <div class="panel-footer">Footer</div>
 </div>

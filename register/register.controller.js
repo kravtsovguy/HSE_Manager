@@ -7,6 +7,7 @@
 
     RegisterController.$inject = ['ApiService', '$location', '$rootScope', 'FlashService','$window'];
     function RegisterController(ApiService, $location, $rootScope, FlashService, $window) {
+        
         var vm = this;
 
         vm.register = register;

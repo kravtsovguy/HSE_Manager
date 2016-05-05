@@ -59,14 +59,14 @@
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }*/
-            /*
+            
             var authData = ApiService.fire.getAuth();
-            //$window.alert("auth: "+authData);
+            //$window.alert("auth: "+JSON.stringify(authData));
             
             if (restrictedPage && !authData) {
               $location.path('/login');
             }
-            */
+            
         });
         
     }
