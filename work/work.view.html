@@ -2,7 +2,7 @@
 <p>{{vm.work.text}}</p>
 
 <div class="panel-group">
-  <div class="panel panel-primary">
+  <div ng-if="vm.myuser && !vm.myuser.teacher" class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" >Моя работа</a>
@@ -19,8 +19,9 @@
               <br>
               <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Отправить</button>
           </form>
-          <div ng-if="vm.myjob != null && vm.myjob.id != '0'">
-              <a ng-click="vm.tojob(vm.myjob.id)">Просмотр</a>
+          <div ng-if="vm.myjob != null && vm.myjob.id != '0'" ng-click="vm.tojob(vm.myjob.id)">
+              <p ng-if="vm.myjob.rate">Оценка: <span class="label label-info">{{vm.myjob.rate.rate}}</span></p>
+              <a>Просмотр</a>
           </div>
     </div>
     </div>
@@ -38,10 +39,11 @@
       <ul class="list-group">
           
         <li class="list-group-item" ng-repeat="job in vm.jusers">
-            <p ng-click="vm.tojob(job.id)">{{job.user.firstName+" "+job.user.lastName}}</p>
+            <p ng-click="vm.tojob(job.id)">{{job.user.firstName+" "+job.user.lastName}} <span class="label label-info">{{job.rate.rate}}</span></p>
+            
         </li>
       </ul>
 </div>
 </div>
 </div>
-<a href="#/" class="btn btn-link">Назад</a>
+<a href="#/" class="btn btn-default btn-block">Назад</a>

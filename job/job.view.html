@@ -23,7 +23,7 @@
     </div>
     </div>
   </div>
-    <div class="panel panel-warning">
+    <div ng-if="vm.myuser.teacher || (vm.rate && vm.rate.rate != '-1')" class="panel panel-warning">
     <div class="panel-heading">
     <h4 class="panel-title">
         Проверка работы
@@ -51,9 +51,9 @@
               <p>{{vm.rate.rate}}</p>
             </div>
               <br>
-              <button href="#/" ng-click="vm.deleteRate()" class="btn btn-danger btn-sm">Удалить оценку</button>
+              <button ng-if="vm.myuser.teacher" href="#/" ng-click="vm.deleteRate()" class="btn btn-danger btn-sm">Удалить оценку</button>
           </div>
     </div>
     </div>
 </div>
-<a ng-click="vm.back()" class="btn btn-link">Назад</a>
+<a ng-click="vm.back()" class="btn btn-default btn-block">Назад</a>

@@ -31,13 +31,23 @@
         }
         
         function loadCurrentUser(){
-            $rootScope.globals.userid = ApiService.getAuth().uid;
+            ApiService.getMe()
+            .then(function (user){
+                vm.myuser = user;
+                
+                if(vm.myuser.teacher){
+                    vm.status = "Преподаватель";
+                }else{
+                    vm.status = "Студент";
+                }
+            });
+            /*$rootScope.globals.userid = ApiService.getAuth().uid;
             ApiService.GetUser(ApiService.getAuth().uid)
             .then(function (user){
                 vm.user = user;
                 $rootScope.globals.user = user;
                 //$window.alert("user: "+JSON.stringify($rootScope.globals.user));
-            });
+            });*/
         }
         
         function towork(index){
@@ -61,7 +71,8 @@
         }
         
         function logout(){
-            ApiService.fire.unauth();
+            
+            ApiService.Logout();
         }
 
 

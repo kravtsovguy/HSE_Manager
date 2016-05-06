@@ -13,6 +13,8 @@
         vm.register = register;
 
         function register() {
+                        //$window.alert("user: "+JSON.stringify(vm.user));
+
             vm.dataLoading = true;
             ApiService.Create(vm.user)
                 .then(function (response) {

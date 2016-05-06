@@ -10,21 +10,36 @@
     <script src="js/bootstrap-filestyle.min.js"></script>
     
 </head>
-<body>
-
-    <div class="jumbotron">
+<body >
+    
+    <div style="background-color: #F0F0F0;">
+    <nav class="navbar navbar-default">
+        <div class="col-sm-8 col-sm-offset-2">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">Главная страница</a>
+    </div>
+    <ul class="nav navbar-nav">
+    </ul>
+  </div>
+            </div>
+</nav>
+        <div class="jumbotron" style="background-color: #F0F0F0;">
         <div class="container">
             <div class="col-sm-8 col-sm-offset-2">
                 <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
                 <div ng-view></div>
             </div>
         </div>
-    </div>
+            </div>
+                    </div>
+
     <div class="credits text-center">
         <p>
             <a href="http://vk.com/mrkravtsov">Matvey Kravtsov</a>
         </p>
     </div>
+
 
     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="//code.angularjs.org/1.2.20/angular.js"></script>

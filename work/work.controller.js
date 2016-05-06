@@ -56,6 +56,8 @@
         initController();
         
         function initController(){
+            loadCurrentUser();
+            
             ApiService.GetWork(vm.workid)
             .then(function (work){
                 vm.work = work;
@@ -79,7 +81,14 @@
                         vm.myjob = {id:key, job:value};
                     }
                     ApiService.GetUser(value.user).then(function (user){
-                        vm.jusers.push({id:key, user:user});
+                        //vm.jusers.push({id:key, user:user});
+                        ApiService.GetRate(key)
+                        .then(function (rate){
+                            vm.jusers.push({id:key, user:user, rate:rate});
+                            if(value.user == ApiService.getAuth().uid){
+                                vm.myjob.rate = rate;
+                            }
+                        });
                         //$window.alert(JSON.stringify(jusers));
                     });
                   //$window.alert( key + ": " + JSON.stringify(value) );
@@ -89,6 +98,13 @@
                 if(vm.myjob == null){
                     vm.myjob = {id:"0"};
                 }
+            });
+        }
+        
+        function loadCurrentUser(){
+            ApiService.getMe()
+            .then(function (user){
+                vm.myuser = user;
             });
         }
         

@@ -5,8 +5,8 @@
         .module('app')
         .factory('ApiService', ApiService);
 
-    ApiService.$inject = ['$http','$window','$q'];
-    function ApiService($http,$window,$q) {
+    ApiService.$inject = ['$http','$window','$q','$rootScope'];
+    function ApiService($http,$window,$q,$rootScope) {
         
         var fire = new Firebase("https://hsemanager2.firebaseio.com");
 
@@ -37,8 +37,33 @@
         service.DeleteRate = DeleteRate;
         service.GetRate = GetRate;
         service.SaveUser = SaveUser;
+        service.getMe = getMe;
+        service.Logout = Logout;
         
         return service;
+        
+        
+        function Logout(){
+            $rootScope.user = null;
+            fire.unauth();
+        }
+        
+        
+        function getMe(){
+            var deferred = $q.defer();
+            
+            if($rootScope.user){
+                deferred.resolve($rootScope.user);
+            }else{
+                GetUser(getAuth().uid)
+                .then(function (user){
+                    $rootScope.user = user;
+                    deferred.resolve(user);
+                });
+            }
+            
+            return deferred.promise;
+        }
         
         function getAuth(){
             return fire.getAuth();
@@ -276,7 +301,8 @@
                     fire.child("users").child(userData.uid).set({
                       firstName: user.firstName,
                       lastName: user.lastName,
-                      email: user.username
+                      email: user.username,
+                      teacher: user.teacher
                     }, function (error){
                         if(error){
                             deferred.resolve({ success: false, message: error });

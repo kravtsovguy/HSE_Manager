@@ -19,6 +19,8 @@
         
         initController();
         function initController(){
+            loadCurrentUser();
+            
             ApiService.GetJob(vm.jobid)
             .then(function (job){
                 vm.job = job;
@@ -45,6 +47,13 @@
                 .then(function (user){
                     vm.rateUser = user;
                 });
+            });
+        }
+        
+        function loadCurrentUser(){
+            ApiService.getMe()
+            .then(function (user){
+                vm.myuser = user;
             });
         }
         
