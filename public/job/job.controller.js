@@ -24,6 +24,19 @@
             ApiService.GetJob(vm.jobid)
             .then(function (job){
                 vm.job = job;
+                var date = new Date(job.date*1000);
+                
+                var options = {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  timezone: 'UTC',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+            };
+
+                vm.date = date.toLocaleString("ru", options);
 
                 ApiService.GetUser(job.user)
                 .then(function (user){

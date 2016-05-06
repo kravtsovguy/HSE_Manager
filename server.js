@@ -3,4 +3,7 @@ var express = require('express'),
 
 app.use(express.static(__dirname + '/public'));
 
-app.listen(8080);
+const PORT=8080; 
+app.listen(PORT, function(){
+    console.log("Server listening on: http://localhost:%s", PORT);
+});

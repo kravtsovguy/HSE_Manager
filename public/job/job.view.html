@@ -18,6 +18,9 @@
               <button ng-click="vm.download()" class="btn btn-primary">Скачать</button>
             </div>
               <br>
+              <label >Время сдачи:</label>
+              <p>{{vm.date}}</p>
+              <br>
               <button ng-if="vm.myuserid==vm.job.user" href="#/" ng-click="vm.deleteJob()" class="btn btn-danger btn-sm">Удалить работу</button>
           </div>
     </div>
