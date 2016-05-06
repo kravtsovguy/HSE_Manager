@@ -10,9 +10,11 @@
         var vm = this;
 
         
-        vm.user = {firstName: "Матвей"};
+        vm.user = {email: ApiService.getAuth().password.email};
         vm.works = [];
         vm.towork = towork;
+        vm.logout = logout;
+        vm.deletework = deletework;
         
         initController();
 
@@ -33,11 +35,22 @@
             $location.path('/work/'+Object.keys(vm.works)[index]);
         }
         
+        function deletework(index){
+            ApiService.DeleteWork(Object.keys(vm.works)[index])
+            .then(function (){
+                $window.location.reload();
+            });
+        }
+        
         function loadAllWorks(){
             ApiService.GetAllWorks()
                 .then(function (works){
                 vm.works = works;
             });
+        }
+        
+        function logout(){
+            ApiService.fire.unauth();
         }
 
 

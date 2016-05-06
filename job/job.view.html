@@ -1,0 +1,43 @@
+<h2>{{vm.work.title}}!</h2>
+<p>{{vm.work.text}}</p>
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" >{{vm.user.email}}</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse">
+      <div class="panel-body">
+          <div ng-if="true">
+              <label >Комментарий:</label>
+              <p>{{vm.job.comment}}</p>
+              <label>Проект:</label>
+              <div>
+              <button ng-click="vm.download()" class="btn btn-primary">Скачать</button>
+            </div>
+              <br>
+              <button href="#/" ng-click="vm.deleteJob()" class="btn btn-danger btn-sm">Удалить</button>
+          </div>
+    </div>
+    </div>
+  </div>
+    <div class="panel panel-warning">
+    <div class="panel-heading">Проверка работы</div>
+    <div class="panel-body">
+        <form ng-if="true" name="form" ng-submit="vm.rateJob()" role="form">
+              <label for="comment">Комментарий:</label>
+              <textarea class="form-control" rows="2" id="comment" ng-model="vm.rating.comment"></textarea>
+              <br>
+              <label for="rate" class="control-label">Оценка:</label>
+                    <select ng-model="vm.rating.rate" class="form-control" id="rate">
+                        <option  ng-repeat="n in [].constructor(11) track by $index">{{$index}}</option>
+                    </select>
+              <br>
+              <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Оценить</button>
+          </form>
+    </div>
+    </div>
+</div>
+<a ng-click="vm.back()" class="btn btn-link">Назад</a>

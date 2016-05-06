@@ -1,4 +1,4 @@
-<h2>Привет, {{vm.user.firstName}}!</h2>
+<h2>Привет, {{vm.user.email}}!</h2>
 <p><a href="#/addwork" class="btn btn-primary">Добавить задание</a></p>
 <div class="panel-group">
 <div class="panel panel-default">
@@ -11,11 +11,11 @@
       <ul class="list-group">
           <li class="list-group-item" ng-repeat="work in vm.works">
               <p ng-click="vm.towork($index)">{{work.title}}</p>
-              <a href="#" ng-click="vm.deletework($index)">Удалить</a>
+              <a ng-click="vm.deletework($index)">Удалить</a>
           </li>
       </ul>
 </div>
 </div>
 </div>
 <p>&nbsp;</p>
-<p><a href="#/login" class="btn btn-danger btn-sm">Logout</a></p>
+<p><a href="#/login" ng-click="vm.logout()" class="btn btn-danger btn-sm">Выйти</a></p>

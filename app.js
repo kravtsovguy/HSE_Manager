@@ -26,6 +26,12 @@
                 templateUrl: 'work/work.view.html',
                 controllerAs: 'vm'
             })
+        
+            .when('/job/:id',{
+                controller: 'JobController',
+                templateUrl: 'job/job.view.html',
+                controllerAs: 'vm'
+            })
 
             .when('/login', {
                 controller: 'LoginController',

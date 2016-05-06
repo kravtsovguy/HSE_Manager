@@ -26,9 +26,103 @@
         service.AddJob = AddJob;
         service.GetJobs = GetJobs;
         service.fire = fire;
-        service.authdata = fire.getAuth();
-
+        //service.authdata = fire.getAuth();
+        service.getAuth = getAuth;
+        service.GetJob = GetJob;
+        service.DeleteJob = DeleteJob;
+        service.GetUser = GetUser;
+        service.GetFile = GetFile;
+        service.DeleteWork = DeleteWork;
+        
         return service;
+        
+        function getAuth(){
+            return fire.getAuth();
+        }
+        
+        function DeleteWork(id){
+            
+            var deferred = $q.defer();
+            
+            fire.child("works/"+id).remove(function(error) {
+                if(error)
+                    deferred.reject(error);
+                else{
+                    deferred.resolve();
+                }
+            });
+            
+            return deferred.promise;
+        }
+        
+        function GetFile(jobid){
+            var deferred = $q.defer();
+            //$window.alert("data: ");
+
+            fire.child("files/"+jobid).on("value", function(snapshot) {
+
+                if(snapshot.val())
+                    deferred.resolve(snapshot.val());
+                else
+                    deferred.reject();
+            }, function (errorObject){
+                deferred.reject();
+            });
+            
+            return deferred.promise;
+        }
+        
+        function GetUser(id){
+            var deferred = $q.defer();
+
+            fire.child("users/"+id).on("value", function(snapshot) {
+                if(snapshot.val())
+                    deferred.resolve(snapshot.val());
+                else
+                    deferred.reject();
+            }, function (errorObject){
+                deferred.reject();
+            });
+            
+            return deferred.promise;
+        }
+        
+        function DeleteJob(id){
+            //$window.alert("data:");
+            
+            var deferred = $q.defer();
+            
+            fire.child("jobs/"+id).remove(function(error) {
+                if(error)
+                    deferred.reject(error);
+                else{
+                    //deferred.resolve();
+                    fire.child("files/"+id).remove(function(error) {
+                    if(error)
+                        deferred.reject(error);
+                    else
+                        deferred.resolve();
+                });
+                }
+            });
+            
+            return deferred.promise;
+        }
+        
+        function GetJob(id){
+            var deferred = $q.defer();
+            
+            fire.child("jobs/"+id).on("value", function(snapshot) {
+                if(snapshot.val())
+                    deferred.resolve(snapshot.val());
+                else
+                    deferred.reject();
+            }, function (errorObject){
+                deferred.reject();
+            });
+            
+            return deferred.promise;
+        }
         
         function GetJobs(workid){
             var deferred = $q.defer();
@@ -42,14 +136,14 @@
             return deferred.promise;
         }
         
-        function AddJob(job,file){
+        function AddJob(job,fileinfo){
             var deferred = $q.defer();
             
             //$window.alert(JSON.stringify(job));
-            if(file){
+            if(fileinfo.file){
             var jpush = fire.child("jobs").push();
             jpush.set(job, function(error) {
-                fire.child("files/"+jpush.key()).set({file:file}, function (error2){
+                fire.child("files/"+jpush.key()).set(fileinfo, function (error2){
                     deferred.resolve(error2);
                 });
             });
@@ -124,7 +218,17 @@
                   } else {
                     //console.log("Successfully created user account with uid:", userData.uid);
                     //$window.alert("ok! "+JSON.stringify(userData));
-                    deferred.resolve({ success: true, userData: userData });
+                    fire.child("users").child(userData.uid).set({
+                      firstName: user.firstName,
+                      lastName: user.lastName,
+                      email: user.username
+                    }, function (error){
+                        if(error){
+                            deferred.resolve({ success: false, message: error });
+                        }else{
+                            deferred.resolve({ success: true, userData: userData });
+                        }
+                    });
                     }
             });
             
