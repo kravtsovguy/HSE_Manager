@@ -1,10 +1,10 @@
-<h2>Привет, {{vm.user.email}}!</h2>
-<p><a href="#/addwork" class="btn btn-primary">Добавить задание</a></p>
+<h2>Привет, {{vm.user.firstName+" "+vm.user.lastName}}! <a href="#/profile" class="btn btn-warning">Профиль</a></h2>
+<br>
 <div class="panel-group">
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse">Задания:</a>
+        <a data-toggle="collapse">Доступные задания:</a>
       </h4>
     </div>
 <div id="collapse1" class="panel-collapse">
@@ -13,6 +13,9 @@
               <p ng-click="vm.towork($index)">{{work.title}}</p>
               <a ng-click="vm.deletework($index)">Удалить</a>
           </li>
+          <div style="display:table; width:100%" class="panel-footer">
+              <a style="display:table-cell; width:100%" href="#/addwork" class="btn btn-primary ">Добавить задание</a>
+          </div>
       </ul>
 </div>
 </div>

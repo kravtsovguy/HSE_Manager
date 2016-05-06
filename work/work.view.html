@@ -2,7 +2,7 @@
 <p>{{vm.work.text}}</p>
 
 <div class="panel-group">
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" >Моя работа</a>
@@ -28,17 +28,17 @@
 </div>
 
 <div class="panel-group">
-<div class="panel panel-default">
+<div class="panel panel-warning">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse">Работы</a>
+        <a data-toggle="collapse">Другие работы</a>
       </h4>
     </div>
 <div id="collapse1" class="panel-collapse">
       <ul class="list-group">
           
         <li class="list-group-item" ng-repeat="job in vm.jusers">
-            <p ng-click="vm.tojob(job.id)">{{job.text}}</p>
+            <p ng-click="vm.tojob(job.id)">{{job.user.firstName+" "+job.user.lastName}}</p>
         </li>
       </ul>
 </div>

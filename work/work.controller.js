@@ -79,7 +79,7 @@
                         vm.myjob = {id:key, job:value};
                     }
                     ApiService.GetUser(value.user).then(function (user){
-                        vm.jusers.push({id:key, text:user.email});
+                        vm.jusers.push({id:key, user:user});
                         //$window.alert(JSON.stringify(jusers));
                     });
                   //$window.alert( key + ": " + JSON.stringify(value) );

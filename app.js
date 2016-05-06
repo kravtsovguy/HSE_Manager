@@ -15,6 +15,12 @@
                 controllerAs: 'vm'
             })
             
+            .when('/profile', {
+                controller: 'ProfileController',
+                templateUrl: 'profile/profile.view.html',
+                controllerAs: 'vm'
+            })
+            
             .when('/addwork', {
                 controller: 'AddWorkController',
                 templateUrl: 'addwork/addwork.view.html',

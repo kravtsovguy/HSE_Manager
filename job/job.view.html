@@ -2,10 +2,10 @@
 <p>{{vm.work.text}}</p>
 
 <div class="panel-group">
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" >{{vm.user.email}}</a>
+        <a data-toggle="collapse" >{{vm.user.firstName+" "+vm.user.lastName}}</a>
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse">
@@ -18,13 +18,17 @@
               <button ng-click="vm.download()" class="btn btn-primary">Скачать</button>
             </div>
               <br>
-              <button href="#/" ng-click="vm.deleteJob()" class="btn btn-danger btn-sm">Удалить</button>
+              <button ng-if="vm.myuserid==vm.job.user" href="#/" ng-click="vm.deleteJob()" class="btn btn-danger btn-sm">Удалить работу</button>
           </div>
     </div>
     </div>
   </div>
     <div class="panel panel-warning">
-    <div class="panel-heading">Проверка работы</div>
+    <div class="panel-heading">
+    <h4 class="panel-title">
+        Проверка работы
+    </h4>
+    </div>
     <div class="panel-body">
         <form ng-if="vm.rate && vm.rate.rate == '-1'" name="form" ng-submit="vm.rateJob()" role="form">
               <label for="comment">Комментарий:</label>
@@ -38,6 +42,8 @@
               <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Оценить</button>
         </form>
         <div ng-if="vm.rate && vm.rate.rate != '-1'">
+            <label >Преподаватель:</label>
+              <p>{{vm.rateUser.firstName+" "+vm.rateUser.lastName}}</p>
               <label >Комментарий:</label>
               <p>{{vm.rate.comment}}</p>
               <label>Оценка:</label>

@@ -21,12 +21,23 @@
         function initController() {
             //loadCurrentUser();
             //loadAllUsers();
+            loadCurrentUser();
             loadAllWorks();
             //UserService.GetAllWorks();
             /*UserService.AddWork({
                 title: "CP - 1",
                 descr: "bla bla"
             });*/
+        }
+        
+        function loadCurrentUser(){
+            $rootScope.globals.userid = ApiService.getAuth().uid;
+            ApiService.GetUser(ApiService.getAuth().uid)
+            .then(function (user){
+                vm.user = user;
+                $rootScope.globals.user = user;
+                //$window.alert("user: "+JSON.stringify($rootScope.globals.user));
+            });
         }
         
         function towork(index){

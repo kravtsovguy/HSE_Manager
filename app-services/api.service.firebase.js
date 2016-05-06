@@ -36,11 +36,24 @@
         service.AddRate = AddRate;
         service.DeleteRate = DeleteRate;
         service.GetRate = GetRate;
+        service.SaveUser = SaveUser;
         
         return service;
         
         function getAuth(){
             return fire.getAuth();
+        }
+        
+        function SaveUser(id,user){
+            var deferred = $q.defer();
+            
+            var onComplete = function(error) {
+              deferred.resolve(error);
+            };
+            
+            fire.child("users/"+id).set(user, onComplete);
+            
+            return deferred.promise;
         }
         
         function GetRate(id){

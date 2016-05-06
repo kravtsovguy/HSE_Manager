@@ -5,8 +5,8 @@
         .module('app')
         .controller('JobController', JobController);
 
-    JobController.$inject = ['ApiService', '$location', '$routeParams', 'FlashService','$window'];
-    function JobController(ApiService, $location, $routeParams, FlashService, $window) {
+    JobController.$inject = ['ApiService', '$location', '$routeParams', 'FlashService','$window','$rootScope'];
+    function JobController(ApiService, $location, $routeParams, FlashService, $window, $rootScope) {
         
         var vm = this;
         vm.jobid = $routeParams.id;
@@ -15,6 +15,7 @@
         vm.deleteJob = deleteJob;
         vm.rateJob = rateJob;
         vm.deleteRate = deleteRate;
+        vm.myuserid = ApiService.getAuth().uid;//$rootScope.globals.userid;
         
         initController();
         function initController(){
@@ -40,6 +41,10 @@
                     return;
                 }
                 vm.rate = rate;
+                ApiService.GetUser(rate.user)
+                .then(function (user){
+                    vm.rateUser = user;
+                });
             });
         }
         
@@ -52,6 +57,7 @@
         
         function rateJob(){
             //$window.alert("rating: "+JSON.stringify(vm.rating));
+            vm.rating.user = vm.myuserid;
             ApiService.AddRate(vm.jobid,vm.rating)
             .then(function (error){
                 $window.location.reload();
