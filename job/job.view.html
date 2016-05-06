@@ -26,7 +26,7 @@
     <div class="panel panel-warning">
     <div class="panel-heading">Проверка работы</div>
     <div class="panel-body">
-        <form ng-if="true" name="form" ng-submit="vm.rateJob()" role="form">
+        <form ng-if="vm.rate && vm.rate.rate == '-1'" name="form" ng-submit="vm.rateJob()" role="form">
               <label for="comment">Комментарий:</label>
               <textarea class="form-control" rows="2" id="comment" ng-model="vm.rating.comment"></textarea>
               <br>
@@ -36,7 +36,17 @@
                     </select>
               <br>
               <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Оценить</button>
-          </form>
+        </form>
+        <div ng-if="vm.rate && vm.rate.rate != '-1'">
+              <label >Комментарий:</label>
+              <p>{{vm.rate.comment}}</p>
+              <label>Оценка:</label>
+              <div>
+              <p>{{vm.rate.rate}}</p>
+            </div>
+              <br>
+              <button href="#/" ng-click="vm.deleteRate()" class="btn btn-danger btn-sm">Удалить оценку</button>
+          </div>
     </div>
     </div>
 </div>

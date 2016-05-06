@@ -33,11 +33,54 @@
         service.GetUser = GetUser;
         service.GetFile = GetFile;
         service.DeleteWork = DeleteWork;
+        service.AddRate = AddRate;
+        service.DeleteRate = DeleteRate;
+        service.GetRate = GetRate;
         
         return service;
         
         function getAuth(){
             return fire.getAuth();
+        }
+        
+        function GetRate(id){
+            var deferred = $q.defer();
+
+            fire.child("rates/"+id).on("value", function(snapshot) {
+                
+                deferred.resolve(snapshot.val());
+
+            }, function (errorObject){
+                deferred.reject();
+            });
+            
+            return deferred.promise;
+        }
+        
+        function DeleteRate(id){
+            var deferred = $q.defer();
+            
+            fire.child("rates/"+id).remove(function(error) {
+                if(error)
+                    deferred.reject(error);
+                else{
+                    deferred.resolve();
+                }
+            });
+            
+            return deferred.promise;
+        }
+        
+        function AddRate(jobid,rate){
+            var deferred = $q.defer();
+            
+            var onComplete = function(error) {
+              deferred.resolve(error);
+            };
+            
+            fire.child("rates/"+jobid).set(rate, onComplete);
+            
+            return deferred.promise;
         }
         
         function DeleteWork(id){
@@ -57,7 +100,6 @@
         
         function GetFile(jobid){
             var deferred = $q.defer();
-            //$window.alert("data: ");
 
             fire.child("files/"+jobid).on("value", function(snapshot) {
 

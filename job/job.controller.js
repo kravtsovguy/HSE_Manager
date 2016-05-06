@@ -13,6 +13,8 @@
         vm.download = download;
         vm.back = back;
         vm.deleteJob = deleteJob;
+        vm.rateJob = rateJob;
+        vm.deleteRate = deleteRate;
         
         initController();
         function initController(){
@@ -31,6 +33,14 @@
             }, function (){
                 $location.path('/');
             });
+            ApiService.GetRate(vm.jobid)
+            .then(function (rate){
+                if(rate == null){
+                    vm.rate = {rate: '-1'};
+                    return;
+                }
+                vm.rate = rate;
+            });
         }
         
         function deleteJob(){
@@ -39,6 +49,22 @@
                 back();
             });
         }
+        
+        function rateJob(){
+            //$window.alert("rating: "+JSON.stringify(vm.rating));
+            ApiService.AddRate(vm.jobid,vm.rating)
+            .then(function (error){
+                $window.location.reload();
+            });
+        }
+        
+        function deleteRate(){
+            ApiService.DeleteRate(vm.jobid)
+            .then(function (){
+                $window.location.reload();
+            });
+        }
+        
         
         function download() {
             ApiService.GetFile(vm.jobid)
