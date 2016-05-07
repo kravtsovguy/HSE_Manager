@@ -14,6 +14,7 @@
         
         function login() {
             vm.dataLoading = true;
+            //$window.alert("user");
             ApiService.Login(vm.username, vm.password)
                 .then(function (response) {
                 if (response.success) {
