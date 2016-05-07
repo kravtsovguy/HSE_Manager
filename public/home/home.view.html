@@ -11,11 +11,13 @@
 <div id="collapse1" class="panel-collapse">
       <ul class="list-group">
           <li class="list-group-item" ng-repeat="work in vm.works">
-              <p ng-click="vm.towork($index)">{{work.title}}</p>
-              <a ng-if="vm.myuser.teacher" ng-click="vm.deletework($index)">Удалить</a>
+              <p ng-click="vm.towork(work.id)">{{work.work.title}}</p>
+              <div ng-if="vm.myuser.teacher">
+                  ( <a ng-click="vm.editwork(work.id)">Изменить</a> / <a ng-click="vm.deletework(work.id)">Удалить</a> )
+                </div>
           </li>
           <div ng-if="vm.myuser.teacher" class="panel-footer">
-              <a  href="#/addwork" class="btn btn-primary btn-block">Добавить задание</a>
+              <a  href="#/work/create" class="btn btn-primary btn-block">Добавить задание</a>
           </div>
       </ul>
 </div>

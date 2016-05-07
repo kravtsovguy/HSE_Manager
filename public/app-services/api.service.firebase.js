@@ -39,6 +39,7 @@
         service.SaveUser = SaveUser;
         service.getMe = getMe;
         service.Logout = Logout;
+        service.SaveWork = SaveWork;
         
         return service;
         
@@ -46,6 +47,20 @@
         function Logout(){
             $rootScope.user = null;
             fire.unauth();
+        }
+        
+        
+        function SaveWork(id,work) {
+            
+            var deferred = $q.defer();
+            
+            var onComplete = function(error) {
+              deferred.resolve(error);
+            };
+            
+            fire.child("works/"+id).set(work, onComplete);
+            
+            return deferred.promise;
         }
         
         

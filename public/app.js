@@ -27,6 +27,18 @@
                 controllerAs: 'vm'
             })
         
+            .when('/work/create', {
+                controller: 'WorkEditController',
+                templateUrl: 'work/workedit.view.html',
+                controllerAs: 'vm'
+            })
+            
+            .when('/work/edit/:id', {
+                controller: 'WorkEditController',
+                templateUrl: 'work/workedit.view.html',
+                controllerAs: 'vm'
+            })
+        
             .when('/work/:id', {
                 controller: 'WorkController',
                 templateUrl: 'work/work.view.html',

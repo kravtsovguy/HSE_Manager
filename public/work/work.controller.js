@@ -74,8 +74,10 @@
                 vm.jobs = jobs;
                 
                 //$window.alert("myjob: "+JSON.stringify(vm.myjob));
-                
-                $.each( jobs, function( key, value ) {
+                Object.keys(jobs).reverse().forEach(function (key){
+                //});
+                    var value = jobs[key];
+                //$.each( jobs, function( key, value ) {
                     //$window.alert(JSON.stringify(value.user));
                     if(value.user == ApiService.getAuth().uid){
                         vm.myjob = {id:key, job:value};

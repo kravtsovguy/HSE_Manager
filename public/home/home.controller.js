@@ -15,6 +15,7 @@
         vm.towork = towork;
         vm.logout = logout;
         vm.deletework = deletework;
+        vm.editwork = editwork;
         
         initController();
 
@@ -50,14 +51,19 @@
             });*/
         }
         
-        function towork(index){
+        function towork(id){
             //$window.alert("work: "+JSON.stringify(vm.works[Object.keys(vm.works)[index]]));
             //$window.alert("work: "+Object.keys(vm.works)[index]);
-            $location.path('/work/'+Object.keys(vm.works)[index]);
+            //$location.path('/work/'+Object.keys(vm.works)[index]);
+            $location.path('/work/'+id);
         }
         
-        function deletework(index){
-            ApiService.DeleteWork(Object.keys(vm.works)[index])
+        function editwork(id){
+            $location.path('/work/edit/'+id);
+        }
+        
+        function deletework(id){
+            ApiService.DeleteWork(id)
             .then(function (){
                 $window.location.reload();
             });
@@ -66,7 +72,12 @@
         function loadAllWorks(){
             ApiService.GetAllWorks()
                 .then(function (works){
-                vm.works = works;
+                vm.works = [];
+                Object.keys(works).reverse().forEach(function (key){
+                    vm.works.push({id:key, work:works[key]});
+                });
+                //$window.alert(JSON.stringify(vm.works));
+                //vm.works = vm.works.reverse();
             });
         }
         
