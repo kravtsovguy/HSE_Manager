@@ -16,7 +16,7 @@
                         //$window.alert("user: "+JSON.stringify(vm.user));
 
             vm.dataLoading = true;
-            ApiService.Create(vm.user)
+            ApiService.Register(vm.user)
                 .then(function (response) {
                     //$window.alert("response: "+JSON.stringify(response));
                     if (response.success) {

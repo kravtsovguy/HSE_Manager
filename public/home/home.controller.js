@@ -20,6 +20,12 @@
         initController();
 
         function initController() {
+            /*ApiService.TestApi()
+            .then(function (data){
+                alert(JSON.stringify(data));
+            },function (resp){
+                alert(JSON.stringify(resp));
+            });*/
             //loadCurrentUser();
             //loadAllUsers();
             loadCurrentUser();

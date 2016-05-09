@@ -40,8 +40,71 @@
         service.getMe = getMe;
         service.Logout = Logout;
         service.SaveWork = SaveWork;
+        service.TestApi = TestApi;
+        service.Register = Register;
         
         return service;
+        
+        function ajaxHelper(uri, method, data) {
+        return $.ajax({
+            type: method,
+            url: uri,
+            dataType: 'json',
+            contentType: 'application/json',
+            data: data ? JSON.stringify(data) : null
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert("error: "+JSON.stringify(jqXHR));
+                //self.error(errorThrown);
+            });
+        }
+
+        function getAllBooks() {
+            ajaxHelper("http://192.168.1.19/api/values", 'GET').done(function (data) {
+                alert("done: "+JSON.stringify(data));
+                //self.books(data);
+            });
+        }
+        
+        
+        function TestApi(){
+
+            alert("Start test...");
+            
+            $.ajax({
+            url : "http://google.com/",
+            success : function(result){
+                alert(result);
+            }
+            
+        });
+            
+            //getAllBooks();
+            
+            /*$.ajax({
+            url: "http://192.168.1.19/api/all",
+            contentType: "application/json",
+            type: "Get",
+            success: function (data) { 
+                alert(JSON.stringify(data));
+            },
+            error: function (msg) { 
+                alert(JSON.stringify(msg)); 
+            }
+            });*/
+            
+            /*$.getJSON("http://192.168.1.19/api/all", function(result){
+                alert("result: "+JSON.stringify(result));
+            });*/
+            
+            /*
+            return $http({
+              method: 'GET',
+              url: 'http://192.168.1.19:8080/api/all'
+            });*/
+            //return $http.get('http://localhost:5000/api/values');
+            //return $http.get("http://192.168.1.19/api/all/12");
+            //return $http.get('http://192.168.1.19:8080/api/all').then(handleSuccess, handleError('Error getting user by id'));
+        }
         
         
         function Logout(){
@@ -298,9 +361,51 @@
         function GetByUsername(username) {
             return $http.get('/api/users/' + username).then(handleSuccess, handleError('Error getting user by username'));
         }
+        
+        function Register(user){
+            var deferred = $q.defer();
+            
+            if(user.teacher){
+                fire.child("keys").orderByChild("Key").equalTo(user.code).on("value", function(snapshot) {
+                    var code = snapshot.val();
+                    //alert("code: "+JSON.stringify(key));
+                    if(code){
+                        Create(user)
+                        .then(function (response){
+                            if(response.success){
+                                var key = Object.keys(code)[0];
+                                fire.child("keys").child(key).update({
+                                    Date:Math.floor((new Date()).getTime() / 1000),
+                                    UsedBy:response.userData.uid
+                                },function(error){
+                                    if(error){
+                                        deferred.resolve({ success: false, message: error });
+                                    }else{
+                                        deferred.resolve(response);
+                                    }
+                                })
+                            }else{
+                                deferred.resolve(response);
+                            }
+                        });
+                    }else
+                    deferred.resolve({ success: false, message: "Неверный код" });
+                }, function (errorObject) {
+                    deferred.resolve({ success: false, message: error });
+                });
+            }else{
+                Create(user)
+                .then(function (response){
+                    deferred.resolve(response);
+                });
+            }
+            
+            return deferred.promise;
+        }
 
         function Create(user) {
             var deferred = $q.defer();
+            
             
             fire.createUser({
                 email    : user.username,
@@ -365,6 +470,7 @@
         // private functions
 
         function handleSuccess(res) {
+            $window.alert("res: "+JSON.stringify(res));
             return res.data;
         }
 
