@@ -15,7 +15,7 @@
         function login() {
             vm.dataLoading = true;
             //$window.alert("user");
-            ApiService.Login(vm.username, vm.password)
+            ApiService.TryLogin({ email:vm.username, password:vm.password})
                 .then(function (response) {
                 if (response.success) {
                     //AuthenticationService.SetCredentials(vm.username, response.authdata);

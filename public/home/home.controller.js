@@ -19,7 +19,7 @@
         
         initController();
 
-        function initController() {
+        function initController(){
             /*ApiService.TestApi()
             .then(function (data){
                 alert(JSON.stringify(data));
@@ -28,6 +28,7 @@
             });*/
             //loadCurrentUser();
             //loadAllUsers();
+            check();
             loadCurrentUser();
             loadAllWorks();
             //UserService.GetAllWorks();
@@ -35,6 +36,16 @@
                 title: "CP - 1",
                 descr: "bla bla"
             });*/
+        }
+        
+        function check(){
+            ApiService.CheckUser(ApiService.getAuth().uid)
+            .then(function (response){
+                //alert(JSON.stringify(response));
+                if(!response.success){
+                    $location.path('/login');
+                }
+            });
         }
         
         function loadCurrentUser(){

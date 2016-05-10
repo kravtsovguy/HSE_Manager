@@ -42,6 +42,8 @@
         service.SaveWork = SaveWork;
         service.TestApi = TestApi;
         service.Register = Register;
+        service.TryLogin = TryLogin;
+        service.CheckUser = CheckUser;
         
         return service;
         
@@ -151,6 +153,7 @@
             var deferred = $q.defer();
             
             var onComplete = function(error) {
+                $rootScope.user = user;
               deferred.resolve(error);
             };
             
@@ -162,7 +165,7 @@
         function GetRate(id){
             var deferred = $q.defer();
 
-            fire.child("rates/"+id).on("value", function(snapshot) {
+            fire.child("rates/"+id).once("value", function(snapshot) {
                 
                 deferred.resolve(snapshot.val());
 
@@ -217,7 +220,7 @@
         function GetFile(jobid){
             var deferred = $q.defer();
 
-            fire.child("files/"+jobid).on("value", function(snapshot) {
+            fire.child("files/"+jobid).once("value", function(snapshot) {
 
                 if(snapshot.val())
                     deferred.resolve(snapshot.val());
@@ -233,7 +236,7 @@
         function GetUser(id){
             var deferred = $q.defer();
 
-            fire.child("users/"+id).on("value", function(snapshot) {
+            fire.child("users/"+id).once("value", function(snapshot) {
                 if(snapshot.val())
                     deferred.resolve(snapshot.val());
                 else
@@ -270,7 +273,7 @@
         function GetJob(id){
             var deferred = $q.defer();
             
-            fire.child("jobs/"+id).on("value", function(snapshot) {
+            fire.child("jobs/"+id).once("value", function(snapshot) {
                 if(snapshot.val())
                     deferred.resolve(snapshot.val());
                 else
@@ -285,7 +288,7 @@
         function GetJobs(workid){
             var deferred = $q.defer();
 
-            fire.child("jobs").orderByChild("work").equalTo(workid).on("value", function(snapshot) {
+            fire.child("jobs").orderByChild("work").equalTo(workid).once("value", function(snapshot) {
                 deferred.resolve(snapshot.val());
             }, function (errorObject) {
                 deferred.reject();
@@ -312,7 +315,7 @@
         
         function GetWork(id){
             var deferred = $q.defer();
-            fire.child("works/"+id).on("value", function(snapshot) {
+            fire.child("works/"+id).once("value", function(snapshot) {
                 if(snapshot.val())
                     deferred.resolve(snapshot.val());
                 else
@@ -327,7 +330,7 @@
         function GetAllWorks(){
             var deferred = $q.defer();
             
-            fire.child("works").on("value", function(snapshot) {
+            fire.child("works").once("value", function(snapshot) {
                 //$window.alert("works: "+JSON.stringify(snapshot.val()));
                 deferred.resolve(snapshot.val());
             }, function (errorObject) {
@@ -366,7 +369,7 @@
             var deferred = $q.defer();
             
             if(user.teacher){
-                fire.child("keys").orderByChild("Key").equalTo(user.code).on("value", function(snapshot) {
+                fire.child("keys").orderByChild("Key").equalTo(user.code).once("value", function(snapshot) {
                     var code = snapshot.val();
                     //alert("code: "+JSON.stringify(key));
                     if(code){
@@ -391,7 +394,7 @@
                     }else
                     deferred.resolve({ success: false, message: "Неверный код" });
                 }, function (errorObject) {
-                    deferred.resolve({ success: false, message: error });
+                    deferred.resolve({ success: false, message: errorObject });
                 });
             }else{
                 Create(user)
@@ -443,6 +446,51 @@
 
         function Delete(id) {
             return $http.delete('/api/users/' + id).then(handleSuccess, handleError('Error deleting user'));
+        }
+        
+        function CheckUser(id,response){
+            var deferred = $q.defer();
+            if(!response){
+                response = {success:true, message:"OK!"}
+            }
+
+            fire.child("keys").orderByChild("UsedBy").equalTo(id).once("value", function(snapshot) {
+                    var code = snapshot.val();
+                    if(code){
+                        var key = Object.keys(code)[0];
+                        if(code[key].Date == -1){
+                            Logout();
+                            deferred.resolve({success: false, message: "Ваш аккаунт заблокирован!"});
+                        }else{
+                            deferred.resolve(response);
+                        }
+                    }else{
+                        deferred.resolve(response);
+                    }
+                    }, function (errorObject) {
+                        deferred.resolve({ success: false, message: errorObject });
+                    });
+            
+            return deferred.promise;
+        }
+        
+        function TryLogin(user){
+            var deferred = $q.defer();
+            
+            
+            Login(user.email,user.password)
+            .then(function (response){
+                if(response.success) {
+                    CheckUser(response.authdata.uid,response)
+                    .then(function (response2){
+                        deferred.resolve(response2);
+                    });
+                }else{
+                    deferred.resolve(response);
+                }
+            });
+            
+            return deferred.promise;
         }
         
         function Login(email,password){
