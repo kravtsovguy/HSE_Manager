@@ -15,7 +15,7 @@
         vm.deleteJob = deleteJob;
         vm.rateJob = rateJob;
         vm.deleteRate = deleteRate;
-        vm.myuserid = ApiService.getAuth().uid;//$rootScope.globals.userid;
+        vm.myuserid = ApiService.getAuth().uid;
         
         initController();
         function initController(){
@@ -78,7 +78,6 @@
         }
         
         function rateJob(){
-            //$window.alert("rating: "+JSON.stringify(vm.rating));
             vm.rating.user = vm.myuserid;
             ApiService.AddRate(vm.jobid,vm.rating)
             .then(function (error){
@@ -109,7 +108,6 @@
         function downloadData(filename, data) {
               var element = document.createElement('a');
                 element.setAttribute('href', data);
-                //element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
               element.setAttribute('download', filename);
 
               element.style.display = 'none';

@@ -19,7 +19,6 @@
             ApiService.getMe()
                 .then(function (user){
                     vm.user = user;
-                    //$window.alert("user: "+vm.user);
                 });
         }
         

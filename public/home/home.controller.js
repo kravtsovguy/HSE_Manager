@@ -20,28 +20,14 @@
         initController();
 
         function initController(){
-            /*ApiService.TestApi()
-            .then(function (data){
-                alert(JSON.stringify(data));
-            },function (resp){
-                alert(JSON.stringify(resp));
-            });*/
-            //loadCurrentUser();
-            //loadAllUsers();
             check();
             loadCurrentUser();
             loadAllWorks();
-            //UserService.GetAllWorks();
-            /*UserService.AddWork({
-                title: "CP - 1",
-                descr: "bla bla"
-            });*/
         }
         
         function check(){
             ApiService.CheckUser(ApiService.getAuth().uid)
             .then(function (response){
-                //alert(JSON.stringify(response));
                 if(!response.success){
                     $location.path('/login');
                 }
@@ -59,19 +45,9 @@
                     vm.status = "Студент";
                 }
             });
-            /*$rootScope.globals.userid = ApiService.getAuth().uid;
-            ApiService.GetUser(ApiService.getAuth().uid)
-            .then(function (user){
-                vm.user = user;
-                $rootScope.globals.user = user;
-                //$window.alert("user: "+JSON.stringify($rootScope.globals.user));
-            });*/
         }
         
         function towork(id){
-            //$window.alert("work: "+JSON.stringify(vm.works[Object.keys(vm.works)[index]]));
-            //$window.alert("work: "+Object.keys(vm.works)[index]);
-            //$location.path('/work/'+Object.keys(vm.works)[index]);
             $location.path('/work/'+id);
         }
         
@@ -93,8 +69,6 @@
                 Object.keys(works).reverse().forEach(function (key){
                     vm.works.push({id:key, work:works[key]});
                 });
-                //$window.alert(JSON.stringify(vm.works));
-                //vm.works = vm.works.reverse();
             });
         }
         

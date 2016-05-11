@@ -51,7 +51,6 @@
         vm.sendjob = sendjob;
         vm.jobs=[];
         vm.jusers=[];
-        //vm.myjob=null;
         vm.tojob = tojob;
         initController();
         
@@ -73,17 +72,12 @@
                 }
                 vm.jobs = jobs;
                 
-                //$window.alert("myjob: "+JSON.stringify(vm.myjob));
                 Object.keys(jobs).reverse().forEach(function (key){
-                //});
                     var value = jobs[key];
-                //$.each( jobs, function( key, value ) {
-                    //$window.alert(JSON.stringify(value.user));
                     if(value.user == ApiService.getAuth().uid){
                         vm.myjob = {id:key, job:value};
                     }
                     ApiService.GetUser(value.user).then(function (user){
-                        //vm.jusers.push({id:key, user:user});
                         ApiService.GetRate(key)
                         .then(function (rate){
                             vm.jusers.push({id:key, user:user, rate:rate});
@@ -91,12 +85,9 @@
                                 vm.myjob.rate = rate;
                             }
                         });
-                        //$window.alert(JSON.stringify(jusers));
                     });
-                  //$window.alert( key + ": " + JSON.stringify(value) );
                     
                 });
-                //$window.alert("myjob: "+JSON.stringify(vm.myjob));
                 if(vm.myjob == null){
                     vm.myjob = {id:"0"};
                 }
@@ -118,11 +109,9 @@
                 file: vm.file,
                 ext: getExt(vm.filename.name)
             };
-            //$window.alert("---: "+JSON.stringify(vm.fileinfo));
             ApiService.AddJob(vm.myjob,vm.fileinfo)
             .then(function (error){
                 if(!error){
-                    //$window.alert("ok!");
                     $window.location.reload();
                 }
             });
@@ -132,14 +121,9 @@
             return str.substring(str.lastIndexOf('.') + 1);
         }
         
-        /*function tojob(index){
-            $location.path('/job/'+Object.keys(vm.jobs)[index]);
-        }*/
         function tojob(id){
             $location.path('/job/'+id);
         }
-        
-        //$window.alert($routeParams.id);
 
         
     }

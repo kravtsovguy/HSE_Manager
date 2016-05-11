@@ -68,24 +68,13 @@
 
     run.$inject = ['$rootScope', '$location', '$cookieStore', '$http','$window','ApiService'];
     function run($rootScope, $location, $cookieStore, $http, $window, ApiService) {
-        // keep user logged in after page refresh
-        /*$rootScope.globals = $cookieStore.get('globals') || {};
-        if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-        }*/
-        
-        //var fire = new Firebase("https://hsemanager2.firebaseio.com");
         
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-            /*var loggedIn = $rootScope.globals.currentUser;
-            if (restrictedPage && !loggedIn) {
-                $location.path('/login');
-            }*/
             
             var authData = ApiService.fire.getAuth();
-            //$window.alert("auth: "+JSON.stringify(authData));
             
             if (restrictedPage && !authData) {
               $location.path('/login');

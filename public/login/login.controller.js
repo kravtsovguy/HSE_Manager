@@ -14,11 +14,9 @@
         
         function login() {
             vm.dataLoading = true;
-            //$window.alert("user");
             ApiService.TryLogin({ email:vm.username, password:vm.password})
                 .then(function (response) {
                 if (response.success) {
-                    //AuthenticationService.SetCredentials(vm.username, response.authdata);
                     $location.path('/');
                 } else {
                     FlashService.Error(response.message);
