@@ -76,6 +76,7 @@
             
             var authData = ApiService.fire.getAuth();
             
+            
             if (restrictedPage && !authData) {
               $location.path('/login');
             }
