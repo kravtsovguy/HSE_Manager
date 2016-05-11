@@ -97,7 +97,8 @@
         function download() {
             ApiService.GetFile(vm.jobid)
             .then(function (fileinfo){
-               downloadData("data."+fileinfo.ext,fileinfo.file);
+                var name = vm.work.title+' '+'['+vm.user.firstName+' '+vm.user.lastName+']'+'.'+fileinfo.ext;
+               downloadData(name,fileinfo.file);
             });
         }
         
