@@ -10,10 +10,11 @@
     },
     "homepage": "https://github.com/kravtsovguy/HSE_Manager",
     "dependencies": {
-        "express": "^4.5.1",
-        "gcloud": "^0.8.1"
+        "express": "^4.5.1"
     },
     "scripts": {
-        "start": "sudo node server.js"
+        "start": "sudo node server.js",
+        "run": "gcloud preview app run",
+        "deploy": "gcloud preview app deploy"
     }
 }
