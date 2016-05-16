@@ -1,0 +1,19 @@
+{
+    "name": "HSE-Manager",
+    "description": "Manager for works",
+    "version": "1.0.0",
+    "license": "ISC",
+    "author": "Matvey Kravtsov",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kravtsovguy/HSE_Manager.git"
+    },
+    "homepage": "https://github.com/kravtsovguy/HSE_Manager",
+    "dependencies": {
+        "express": "^4.5.1",
+        "gcloud": "^0.8.1"
+    },
+    "scripts": {
+        "start": "sudo node server.js"
+    }
+}
