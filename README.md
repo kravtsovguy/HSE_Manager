@@ -12,6 +12,11 @@ $ npm install
 $ npm start
 ```
 
+#### Deploying to Apache
+```sh
+$ sudo ./toweb.sh
+```
+
 #### Deploying
 ```sh
 # Get gcloud
@@ -45,3 +50,4 @@ $ curl -X GET http://$PROJECT_ID.appspot.com
 - [Example 1](//github.com/GoogleCloudPlatform/gcloud-node-todos)
 - [Example 2](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart)
 - [Example 3](https://github.com/GoogleCloudPlatform/nodejs-docs-samples/tree/master/appengine/hello-world)
+- [Apache](https://www.youtube.com/watch?v=KzJxwu2poIc)
