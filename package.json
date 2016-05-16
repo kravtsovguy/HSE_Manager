@@ -13,6 +13,7 @@
         "express": "^4.5.1"
     },
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "deploy": "gcloud preview app deploy"
     }
 }
